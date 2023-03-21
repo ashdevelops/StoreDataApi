@@ -6,6 +6,7 @@ use Carbon\Carbon;
 
 interface StoreOpeningHours
 {
-        function isOpenAt(Carbon $timestamp) : array;
+    function openingTimes() : array;
+    function isOpenAt(Carbon $timestamp) : array;
     function nextOpenFrom(Carbon $timestamp) : array;
 }
