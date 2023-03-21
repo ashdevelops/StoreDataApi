@@ -17,7 +17,8 @@ class StoreController implements StoreOpeningHours
         7 => [13, 16], // SUNDAY
     ];
 
-    public function isOpenAt(Carbon $timestamp) : array {
+    public function isOpenAt(Carbon $timestamp) : array
+    {
         $openingTimes = self::$storeOpeningHoursDayOfWeek[$timestamp->dayOfWeek];
 
         $openTime = $timestamp->copy()->startOfDay();
@@ -29,7 +30,8 @@ class StoreController implements StoreOpeningHours
         return ['isOpen' => $timestamp > $openTime && $timestamp < $closeTime];
     }
 
-    public function nextOpenFrom(Carbon $timestamp) : array {
+    public function nextOpenFrom(Carbon $timestamp) : array
+    {
         $nextIndex = $timestamp->dayOfWeek >= count(self::$storeOpeningHoursDayOfWeek) ?
             1 :
             $timestamp->dayOfWeek + 1;
