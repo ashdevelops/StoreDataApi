@@ -7,6 +7,10 @@ use Carbon\Carbon;
 
 class StoreController implements StoreOpeningHours
 {
+    // Array key is the day of the week ( 1 - 7)
+    // First value of the nested array is the open time
+    // Second value of the nested array is the close time
+
     private static $storeOpeningHoursDayOfWeek = [
         1 => [9, 18], // MONDAY
         2 => [9, 10], // TUESDAY
@@ -16,6 +20,11 @@ class StoreController implements StoreOpeningHours
         6 => [9, 15], // SATURDAY
         7 => [13, 16], // SUNDAY
     ];
+
+    public function openingTimes() : array
+    {
+        return self::$storeOpeningHoursDayOfWeek;
+    }
 
     public function isOpenAt(Carbon $timestamp) : array
     {

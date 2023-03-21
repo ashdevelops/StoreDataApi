@@ -2,8 +2,9 @@
 
 $dispatcher = FastRoute\simpleDispatcher(
     function (FastRoute\RouteCollector $r) {
-        $r->addRoute('GET', '/store/is-open', ['App\Controllers\StoreController', 'isOpenAt']);
-        $r->addRoute('GET', '/store/next-open', ['App\Controllers\StoreController', 'nextOpenFrom']);
+        $r->addRoute('GET', '/store/opening-times', ['App\Controllers\StoreController', 'openingTimes', [] ]);
+        $r->addRoute('GET', '/store/is-open', ['App\Controllers\StoreController', 'isOpenAt', [ getTimestamp() ]]);
+        $r->addRoute('GET', '/store/next-open', ['App\Controllers\StoreController', 'nextOpenFrom', [ getTimestamp() ]]);
     }
 );
 
@@ -33,7 +34,7 @@ case FastRoute\Dispatcher::FOUND:
     $controller = $routeInfo[1][0];
     $method = $routeInfo[1][1];
     $class = new $controller();
-    $response = call_user_func_array(array($class, $method), [ getTimestamp() ]);
+    $response = call_user_func_array(array($class, $method), $routeInfo[1][2]);
 
     header('Content-type: application/json');
     echo json_encode(['response' => $response]);
