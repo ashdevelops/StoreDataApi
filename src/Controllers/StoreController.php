@@ -32,11 +32,9 @@ class StoreController implements StoreOpeningHours
 
     public function nextOpenFrom(Carbon $timestamp) : array
     {
-        $nextIndex = $timestamp->dayOfWeek >= count(self::$storeOpeningHoursDayOfWeek) ?
-            1 :
-            $timestamp->dayOfWeek + 1;
+        $nextIndex = getNextArrayKey(self::$storeOpeningHoursDayOfWeek, $timestamp->dayOfWeek);
 
-        $nextOpeningDay = $timestamp->addDay()->startOfDay();
+        $nextOpeningDay = $timestamp->startOfDay()->next($nextIndex);
 
         $nextOpeningHours = self::$storeOpeningHoursDayOfWeek[$nextIndex];
         $nextOpeningHour = $nextOpeningHours[0];
